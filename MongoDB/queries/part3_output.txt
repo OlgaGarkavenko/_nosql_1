@@ -1,0 +1,149 @@
+=== Без індексу ===
+{
+  isCached: false,
+  stage: 'SORT',
+  sortPattern: {
+    popularity: -1
+  },
+  memLimit: 33554432,
+  type: 'simple',
+  inputStage: {
+    stage: 'COLLSCAN',
+    filter: {
+      '$and': [
+        {
+          track_genre: {
+            '$eq': 'pop'
+          }
+        },
+        {
+          'audio_features.danceability': {
+            '$gte': 0.7
+          }
+        }
+      ]
+    },
+    direction: 'forward'
+  }
+}
+Переглянуто документів: 113999
+Знайдено документів: 354
+Індекс створено
+=== З індексом ===
+{
+  isCached: false,
+  stage: 'FETCH',
+  inputStage: {
+    stage: 'IXSCAN',
+    keyPattern: {
+      track_genre: 1,
+      popularity: -1,
+      'audio_features.danceability': 1
+    },
+    indexName: 'track_genre_1_popularity_-1_audio_features.danceability_1',
+    isMultiKey: false,
+    multiKeyPaths: {
+      track_genre: [],
+      popularity: [],
+      'audio_features.danceability': []
+    },
+    isUnique: false,
+    isSparse: false,
+    isPartial: false,
+    indexVersion: 2,
+    direction: 'forward',
+    indexBounds: {
+      track_genre: [
+        '["pop", "pop"]'
+      ],
+      popularity: [
+        '[MaxKey, MinKey]'
+      ],
+      'audio_features.danceability': [
+        '[0.7, inf.0]'
+      ]
+    }
+  }
+}
+Переглянуто документів: 354
+Знайдено документів: 354
+Індекс створено
+{
+  isCached: false,
+  stage: 'FETCH',
+  inputStage: {
+    stage: 'IXSCAN',
+    keyPattern: {
+      explicit: 1,
+      'audio_features.instrumentalness': 1,
+      'audio_features.speechiness': 1
+    },
+    indexName: 'explicit_1_audio_features.instrumentalness_1_audio_features.speechiness_1',
+    isMultiKey: false,
+    multiKeyPaths: {
+      explicit: [],
+      'audio_features.instrumentalness': [],
+      'audio_features.speechiness': []
+    },
+    isUnique: false,
+    isSparse: false,
+    isPartial: false,
+    indexVersion: 2,
+    direction: 'forward',
+    indexBounds: {
+      explicit: [
+        '[false, false]'
+      ],
+      'audio_features.instrumentalness': [
+        '(0.5, inf.0]'
+      ],
+      'audio_features.speechiness': [
+        '[-inf.0, 0.1)'
+      ]
+    }
+  }
+}
+Переглянуто документів: 16141
+Знайдено документів: 16141
+Покривний запит
+{
+  isCached: false,
+  stage: 'PROJECTION_COVERED',
+  transformBy: {
+    _id: 0,
+    track_genre: 1,
+    popularity: 1
+  },
+  inputStage: {
+    stage: 'IXSCAN',
+    keyPattern: {
+      track_genre: 1,
+      popularity: -1,
+      'audio_features.danceability': 1
+    },
+    indexName: 'track_genre_1_popularity_-1_audio_features.danceability_1',
+    isMultiKey: false,
+    multiKeyPaths: {
+      track_genre: [],
+      popularity: [],
+      'audio_features.danceability': []
+    },
+    isUnique: false,
+    isSparse: false,
+    isPartial: false,
+    indexVersion: 2,
+    direction: 'forward',
+    indexBounds: {
+      track_genre: [
+        '["pop", "pop"]'
+      ],
+      popularity: [
+        '[inf.0, 70]'
+      ],
+      'audio_features.danceability': [
+        '[MinKey, MaxKey]'
+      ]
+    }
+  }
+}
+Переглянуто документів: 0
